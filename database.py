@@ -1,0 +1,2 @@
+def insert():
+    print('Insert')

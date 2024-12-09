@@ -3,11 +3,21 @@ from PIL import Image
 from tkinter import ttk, messagebox
 import database as db
 
+
+def treeview_data():
+    employees = db.fetch_employees()
+    for employee in employees:
+        tree.insert('', END, values = employee)
+    
 def add_employee():
     if idEntry.get()=='' or nameEntry.get()=='' or phoneEntry.get()=='' or salaryEntry.get()=='':
         messagebox.showerror('Alert', 'All feild are required')
+    elif db.id_exists(idEntry.get()):
+        messagebox.showerror('Alert', 'Employee ID already exists')
     else:
-        db.insert(idEntry.get(), nameEntry.get(), phoneEntry.get(), salaryEntry.get(), role_options.get(), gender_options.get())
+        db.insert(idEntry.get(), nameEntry.get(), phoneEntry.get(), roleCombo.get(), genderCombo.get(), salaryEntry.get())
+        def treeview_data():
+            messagebox.showinfo('Success', 'Employee added successfully')
 
 window = CTk()
 window.geometry('950x580+100+100')   # Here 100 is the x position and 100 is the y position of the window to apear on the screen
